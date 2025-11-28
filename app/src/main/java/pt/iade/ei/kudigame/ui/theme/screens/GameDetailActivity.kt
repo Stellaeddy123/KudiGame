@@ -41,7 +41,7 @@ class GameDetailActivity : ComponentActivity(){
 */
 @Composable
 fun GameDetailScreen(game : Game, onBuy: (StoreItem)-> Unit) {
-    val sheetState =
+    val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
     var selectedItem by remember { mutableSetOf<StoreItem?>(null) }
 
