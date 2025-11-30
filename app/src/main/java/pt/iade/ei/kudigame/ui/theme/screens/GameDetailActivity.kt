@@ -22,6 +22,7 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -57,7 +58,7 @@ fun GameDetailScreen(game : Game, onBuy: (StoreItem)-> Unit) {
         initialValue = ModalBottomSheetValue.Hidden
     )
     val scope = rememberCoroutineScope()
-    var selectedItem by remember { mutableSetOf<StoreItem?>(null) }
+    var selectedItem by remember { mutableStateOf<StoreItem?>(null) }
 
     ModalBottomSheetLayout(
         sheetContent = {
@@ -80,7 +81,8 @@ fun GameDetailScreen(game : Game, onBuy: (StoreItem)-> Unit) {
       },
       sheetState = sheetState
     ) {
-        Column (modifier = Modifier
+        Column(
+            modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
         ) {
@@ -93,7 +95,7 @@ fun GameDetailScreen(game : Game, onBuy: (StoreItem)-> Unit) {
 
         LazyColumn {
             items (game.storeItems) { item ->
-                StoreItemRow (item = item, onClick = {
+                StoreItemRow(item = item, onClick = {
                     selectedItem = item
                     scope.launch { sheetState.show() }
                 })
@@ -102,11 +104,7 @@ fun GameDetailScreen(game : Game, onBuy: (StoreItem)-> Unit) {
          }
         }
       }
-
     }
-
-
-
 
 
 
