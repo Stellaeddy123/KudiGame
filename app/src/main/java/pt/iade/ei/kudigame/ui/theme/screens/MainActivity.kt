@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import pt.iade.ei.kudigame.model.Game
 import pt.iade.ei.kudigame.model.SampleData
 import pt.iade.ei.kudigame.ui.theme.components.GameCard
 
@@ -25,28 +26,27 @@ class MainActivity : ComponentActivity() {
         val games = SampleData.games
 
         setContent {
-            MainScreen(games) {selectedGame ->
-                val intent = Intent (this, GameDetailActivity::class.java)
-                intent.putExra("game", selectedGame)
+            MainScreen(games) { selectedGame ->
+                val intent = Intent(this, GameDetailActivity::class.java)
+                intent.putExtra("game", selectedGame)
                 startActivity(intent)
-
+            }
         }
     }
 }
 
 @Composable
-fun MainScreen(games: List<Game>, onGameClick: (Game) -> Unit) {
+fun MainScreen(games: List<Game>, onGameClick: (Game) -> Unit ){
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(8.dp)
     ) {
         items(games) {game ->
-            GameCard(game= game, onClick = { onGameClick(game) })
+            GameCard(game = game, onClick = { onGameClick(game) })
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
-}
 }
 
 @Preview(showBackground = true)

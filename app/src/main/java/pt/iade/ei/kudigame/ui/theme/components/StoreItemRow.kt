@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,14 +22,14 @@ fun StoreItemRow(item: StoreItem, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable {onClick() }
-            .padding(4 .dp)
-        elevation = 3 .dp
+            .padding(4.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
     ) {
-        Column(modifier = Modifier.padding(16 .dp)) {
-            Text(text = item. name)
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = item.name)
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = item.description)
-            Text(text = "Preço: $${item.price}")
+            Text(text = "Preço: $${"%.2f".format(item.price)}")
         }
     }
 }
@@ -36,7 +37,12 @@ fun StoreItemRow(item: StoreItem, onClick: () -> Unit) {
 @Composable
 fun PreviewStoreItemRow() {
     StoreItemRow(
-        item = StoreItemRow("1", "Diablo®", "Participa na luta por Santuário",13.99),
+        item = StoreItem(
+            id = "1",
+            name = "Diablo®",
+            description = "Participa na luta por Santuário",
+            price = 13.99
+        ),
         onClick = {}
     )
 }
