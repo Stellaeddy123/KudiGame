@@ -3,6 +3,8 @@ package pt.iade.ei.kudigame.model
 import pt.iade.ei.kudigame.R
 
 
+
+
 object SampleData {
     val games: List<Game> = listOf(
         Game(
@@ -28,7 +30,7 @@ object SampleData {
                 ),
                 StoreItem(
                     "c3",
-                    "Diablo® IV - Pacote de Platina Tesouro do Rebelde",
+                    "Diablo IV - Pacote de Platina Tesouro do Rebelde",
                     "Os caçadores de tesouros de Nahantu encontram ",
                     6.99,
                     "icon_map"
@@ -40,7 +42,7 @@ object SampleData {
             title = "Warhammer 40,000: Space Marine 2",
             genre = "Ação, Aventura, RPG",
             shortDescription = "Embody the superhuman skill and brutality of a Space Marine.",
-            imageResName = "Warhamer 40,000: Space Marine 2",
+            imageRestName = R.drawable.space_marine_2_banner,
             storeItems = listOf(
                 StoreItem(
                     "m1",
@@ -61,7 +63,7 @@ object SampleData {
                     "Blood Angels Champion Pack",
                     "Gameplay consists of frequent combat scenarios",
                     7.99,
-                    R.drawable.icon_harvest
+                    "icon_harvest"
 
                 )
             )
