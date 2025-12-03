@@ -41,7 +41,9 @@ fun PreviewStoreItemRow() {
             id = "1",
             name = "Diablo®",
             description = "Participa na luta por Santuário",
-            price = 13.99
+            price = 13.99,
+            icon = ""
+            // falta adicionar um ícone 
         ),
         onClick = {}
     )

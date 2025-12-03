@@ -1,121 +1,75 @@
 package pt.iade.ei.kudigame.ui.theme.screens
 
-import android.R
-import android.content.ClipData
-import android.content.Intent
 import android.os.Bundle
-import android.renderscript.Sampler
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetState
-import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 import pt.iade.ei.kudigame.model.Game
-import pt.iade.ei.kudigame.model.StoreItem
+import pt.iade.ei.kudigame.model.SampleData
 
 class GameDetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val game = intent.getParcelableExtra<Game>("game")!!
+        val gameId = intent.getStringExtra("gameId")
+
+        val game = SampleData.games.find { it.id == gameId }
+
+        if (game == null) {
+            finish()
+            return
+        }
+
 
         setContent {
-            GameDetailScreen(game = game) { item ->
-                Toast.makeText(
-                    this,
-                    "Acabou de comprar o item ${item.name} por $${item.price}",
-                    Toast.LENGTH_LONG
-                ).show()
+            if (game != null) {
+                GameDetailScreen(game)
+            } else {
+                Text("Erro: Jogo não encontrado")
             }
         }
     }
 }
 
-
-
 @Composable
-fun GameDetailScreen(game : Game, onBuy: (StoreItem)-> Unit) {
-    val sheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden
-    )
-    val scope = rememberCoroutineScope()
-    var selectedItem by remember { mutableStateOf<StoreItem?>(null) }
-
-    ModalBottomSheetLayout(
-        sheetContent = {
-            selectedItem? .let { item ->
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(text = item.name, style = MaterialTheme.typography.h6)
-                Spacer(Modifier.height(8.dp))
-                Text(text = game.shortDescription)
-                Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = {
-                    // ação de comprar
-                    onBuy(item)
-                    // fechar sheet
-                    scope.launch { sheetState.show() }
-                }) {
-                    Text("Comprar por $${"%.2f".format(item.price)}")
-                }
-            }
-        } ?: Box(modifier = Modifier .height(1.dp))
-      },
-      sheetState = sheetState
-    ) {
-        Column(
-            modifier = Modifier
+fun GameDetailScreen(game: Game) {
+    Column(
+        modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
-        ) {
-        Text( text = game.title, style = MaterialTheme.typography .h4)
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = game.shortDescription)
-        Spacer(modifier = Modifier.height(16.dp))
-        Text("Itens disponiveis:", style = MaterialTheme.typography.h6)
-        Spacer(modifier = Modifier.height(8.dp))
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
-        LazyColumn {
-            items (game.storeItems) { item ->
-                StoreItemRow(item = item, onClick = {
-                    selectedItem = item
-                    scope.launch { sheetState.show() }
-                })
-                HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
-            }
-         }
-        }
-      }
+        Text(text = game.title, style = MaterialTheme.typography.headlineLarge)
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Image(
+            painter = painterResource(id = game.imageRestName),
+            contentDescription = game.title,
+            modifier = Modifier.size(200.dp)
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(text = "Género: ${game.genre}", style = MaterialTheme.typography.bodyLarge)
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Text(text = game.shortDescription, style = MaterialTheme.typography.bodyMedium)
     }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+@Preview(showBackground = true)
+@Composable
+fun PreviewDetail() {
+    GameDetailScreen(game = SampleData.games.first())
+}
