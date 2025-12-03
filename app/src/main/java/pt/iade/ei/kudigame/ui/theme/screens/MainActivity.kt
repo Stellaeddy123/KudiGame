@@ -130,3 +130,8 @@ fun GameCard(game: Game, onGameClick: (Game) -> Unit) {
         }
     }
 }
+@Preview(showBackground = true)
+@Composable
+fun PreviewMainScreen() {
+    MainScreen(games = SampleData.games, onGameClick = { })
+}
