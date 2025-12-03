@@ -95,3 +95,38 @@ fun MainScreen (games: List<Game>, onGameClick: (Game) -> Unit) {
         }
     }
 }
+
+@Composable
+fun GameCard(game: Game, onGameClick: (Game) -> Unit) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(150.dp)
+            .clickable { onClick() },
+        elevation = CardDefaults.cardElevation(2.dp)
+    ) {
+
+        //
+        Image(
+            painter = painterResource(id = game.imageRestName),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+
+        //
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
+            contentAlignment = Alignment.BottomStart
+        ) {
+            Text(
+                text = game.title,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+        }
+    }
+}
