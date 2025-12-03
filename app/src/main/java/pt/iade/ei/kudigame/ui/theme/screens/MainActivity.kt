@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -26,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pt.iade.ei.kudigame.model.Game
 import pt.iade.ei.kudigame.model.SampleData
+import pt.iade.ei.kudigame.ui.theme.components.GameCard
 
 
 class MainActivity : ComponentActivity() {
@@ -39,6 +41,56 @@ class MainActivity : ComponentActivity() {
                 val intent = Intent(this, GameDetailActivity::class.java)
                 intent.putExtra("gameId", selectedGame.id)
                 startActivity(intent)
+            }
+        }
+    }
+}
+
+@Composable
+fun MainScreen (games: List<Game>, onGameClick: (Game) -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFF6EDF7)) //
+            .padding(16.dp)
+
+    ) {
+        //
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Gudi Game",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Row {
+                Icon(
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = null,
+                    modifier = Modifier.padding(horizontal = 12.dp)
+                )
+                Icon(
+                    imageVector = Icons.Default.Settings,
+                    contentDescription = null
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        //
+        LazyColumn {
+            items(games) { game ->
+                GameCard(
+                    game = game,
+                    onClick = { onGameClick(game) }
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+
             }
         }
     }
