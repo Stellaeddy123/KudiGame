@@ -19,21 +19,21 @@ object SampleData {
                     "Diablo® IV: Vessel of Hatred™",
                     "Desvenda o próximo capítulo de Diablo IV em Vessel of Hatred",
                     13.99,
-                    R.drawable.helmet
+                    R.drawable.diablo_item_2
                 ),
                 StoreItem(
                     "c2",
                     "Diablo IV - Banda Sonora",
                     "Recorda a eterna batalha entre o Paraíso Celestial",
                     10.99,
-                    "icon_helmet"
+                    R.drawable.diablo_item_3
                 ),
                 StoreItem(
                     "c3",
                     "Diablo IV - Pacote de Platina Tesouro do Rebelde",
                     "Os caçadores de tesouros de Nahantu encontram ",
                     6.99,
-                    "icon_map"
+                    R.drawable.diablo_item_4
                 )
             )
         ),
@@ -49,21 +49,21 @@ object SampleData {
                     "Warhammer 40,000: Space Marine 2",
                     "Space Marine chapters through four phases",
                     29.99,
-                    "icon_seed"
+                    R.drawable.space_marine_item_1
                 ),
                 StoreItem(
                     "m2",
                     "Warhammer 40,000: Space Marine 2 - Imperial Fists Cosmetic Pack",
                     "Honour your Chapter's proud martial heritage with the Imperial Fists Cosmetic Pack",
                     4.99,
-                    "icon_barn"
+                    R.drawable.space_marine_item_2
                 ),
                 StoreItem(
                     "m3",
                     "Blood Angels Champion Pack",
                     "Gameplay consists of frequent combat scenarios",
                     7.99,
-                    "icon_harvest"
+                    R.drawable.space_marine_item_3
 
                 )
             )

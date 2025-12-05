@@ -42,8 +42,7 @@ fun PreviewStoreItemRow() {
             name = "Diablo®",
             description = "Participa na luta por Santuário",
             price = 13.99,
-            icon = ""
-            // falta adicionar um ícone 
+            iconResId = pt.iade.ei.kudigame.R.drawable.ic_launcher_foreground
         ),
         onClick = {}
     )
