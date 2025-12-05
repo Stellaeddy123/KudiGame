@@ -19,7 +19,7 @@ object SampleData {
                     "Diablo® IV: Vessel of Hatred™",
                     "Desvenda o próximo capítulo de Diablo IV em Vessel of Hatred",
                     13.99,
-                    "icon_speed"
+                    R.drawable.helmet
                 ),
                 StoreItem(
                     "c2",

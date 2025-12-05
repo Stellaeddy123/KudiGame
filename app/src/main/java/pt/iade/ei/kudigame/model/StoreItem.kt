@@ -6,5 +6,5 @@ data class StoreItem(
     val name: String,
     val description: String,
     val price: Double,
-    val icon: String
+    val iconResId: Int
 )
