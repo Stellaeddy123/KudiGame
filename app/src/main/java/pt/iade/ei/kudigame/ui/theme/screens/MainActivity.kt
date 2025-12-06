@@ -148,7 +148,7 @@ fun GameCard(game: Game, onClick: () -> Unit) {
         elevation = CardDefaults.cardElevation(2.dp)
     ) {
 
-        // IMAGEM COMO FUNDO DO CARD — igual à imagem
+
         Image(
             painter = painterResource(id = game.imageRestName),
             contentDescription = null,
@@ -156,7 +156,7 @@ fun GameCard(game: Game, onClick: () -> Unit) {
             modifier = Modifier.fillMaxSize()
         )
 
-        // NOME NA PARTE DE BAIXO
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
