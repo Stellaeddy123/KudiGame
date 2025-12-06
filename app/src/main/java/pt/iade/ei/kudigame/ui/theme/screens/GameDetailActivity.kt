@@ -1,6 +1,5 @@
 package pt.iade.ei.kudigame.ui.theme.screens
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,13 +14,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,6 +61,10 @@ class GameDetailActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameDetailScreen(game: Game, onBack: () -> Unit = {}) {
+
+    // Estado para o ModalBottomSheet
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    var selectedItem by remember { mutableStateOf<StoreItem?>(null) }
 
     Scaffold(
         topBar = {
@@ -120,18 +129,87 @@ fun GameDetailScreen(game: Game, onBack: () -> Unit = {}) {
 
             items(game.storeItems) { item ->
 
-                val context = LocalContext.current
-
                 PurchasableItemCard(
                     item = item,
                     onClick = {
-                        val intent = Intent(context, StoreItemActivity::class.java)
-                        intent.putExtra("itemId", item.id)
-                        context.startActivity(intent)
+                        selectedItem = item
                     }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
+            }
+        }
+    }
+
+
+    if (selectedItem != null) {
+        ModalBottomSheet(
+            onDismissRequest = { selectedItem = null },
+            sheetState = sheetState,
+            containerColor = Color.White
+        ) {
+
+            val item = selectedItem!!
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+
+                Image(
+                    painter = painterResource(id = item.iconResId),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(180.dp)
+                        .clip(RoundedCornerShape(16.dp)),
+                    contentScale = ContentScale.Crop
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = item.name,
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = item.description,
+                    fontSize = 16.sp,
+                    color = Color.DarkGray
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Text(
+                    text = "$${"%.2f".format(item.price)}",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF4CAF50)
+                )
+
+                Spacer(modifier = Modifier.height(25.dp))
+
+                Button(
+                    onClick = { selectedItem = null },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(55.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF4CAF50),
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text("BUY", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
             }
         }
     }
